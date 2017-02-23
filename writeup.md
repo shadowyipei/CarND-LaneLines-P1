@@ -36,7 +36,7 @@ There are several shortcomings in this pipeline
  
  3) There are still arrcuracy issues on finding lanes and filtering out noise lines: In the challenge video, the left lane bounces out of the actual yellow lane in some image frames. 
 
-###3. Suggest possible improvements to your pipeline
+### Suggest possible improvements to your pipeline
 
  1) To improve the accuracy, some parameters could still be tuned.
  
