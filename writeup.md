@@ -1,47 +1,43 @@
 #**Finding Lane Lines on the Road** 
 
-##Writeup Template
+### Pipeline Details
 
-###You can use this file as a template for your writeup if you want to submit it as a markdown file. But feel free to use some other method and submit a pdf if you prefer.
+Current pipeline consists of 6 steps:
 
----
+ 1) Transfer image from RGB to HSV, and utilize channel V instead of grayscale as in example.
+ 
+ 2) Process Gaussian blur on the transferred image.
+ 
+ 3) Process Canny edge detection.
+ 
+ 4) Create a region of interest and only keep edges in this region.
+ 
+ 5) Process Hough Transform 
+ 
+ 6) Draw lines
+    - Categorize lines into two sets: left lines & right lines.
+    - Filter out noise lines by checking on line slope and the coordinate of (x, img.shape[0])
+    - Calculate average of left line slopes and average of (x, img.shape[0]) on left lines as left lane's k and b in y = kx + b
+    - Calculate average of right line slopes and average of (x, img.shape[0]) on right lines as right lane's k and b in y = kx + b
+    - Draw the left lane and right lane.
 
-**Finding Lane Lines on the Road**
+### Potential shortcomings
 
-The goals / steps of this project are the following:
-* Make a pipeline that finds lane lines on the road
-* Reflect on your work in a written report
+There are several shortcomings in this pipeline
 
+ 1) The whole pipeline is optimized based on the comera postion on the car and it can not detect street corners like
+    ---------------------
 
-[//]: # (Image References)
+    --------     --------
+           |     |
+           | car |
+           
+ 2) Another potential issue is when the car passes through a intersection when there are no line marks on the road, this pipeline can't detect the lanes.
+ 
+ 3) There are still arrcuracy issues on finding lanes and filtering out noise lines: In the challenge video, the left lane bounces out of the actual yellow lane in some image frames. 
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
+### Suggest possible improvements to your pipeline
 
----
-
-### Reflection
-
-###1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
-
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
-
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
-
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
-
-![alt text][image1]
-
-
-###2. Identify potential shortcomings with your current pipeline
-
-
-One potential shortcoming would be what would happen when ... 
-
-Another shortcoming could be ...
-
-
-###3. Suggest possible improvements to your pipeline
-
-A possible improvement would be to ...
-
-Another potential improvement could be to ...
+ 1) To improve the accuracy, some parameters could still be tuned.
+ 
+ 2) In order to reduce noise lines when calucats left lane and right lane, other mechanim needs to be deployed to filter out lines which are far off the caculated lanes.   
